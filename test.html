@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .bk{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <p id="content">ABC</p>
+    <p id="test">EFG</p>
+    <div id="content_2"></div>
+    <div id="div1" style="width:80px;height:80px;background-color:red;"></div>
+    <a href="W3Schools.com" id="link">link!!!</a>
+    <button id="btn">Nhấn</button>
+
+    <!-- <script>
+        $("#btn").click(function(){
+            $("#content").toggle();
+        });
+      --------------------------------------------------------------------------------------
+    </script>
+    <script>
+        $("#btn").click(function(){
+            $("#content").text("EFG");
+        });
+      -----------------------------------------------------------------------------------
+    </script> -->
+    <!-- <script>
+        $("#btn").click(function(){
+            $("#content").addClass("bk")
+        });
+      
+    </script> -->
+    <!-------------------------------------------------------------------------------------->
+    <!-- <script>
+        $("#btn").click(function(){
+            $("#content").css({"background-color": "yellow","font-size" : "150%"});
+        });
+      -------------------------------------------------------------------------------------------
+    </script> -->
+    <!-- <script>
+        var A=[{
+            name :"AA",
+            Age : 18,
+            Job : "BB"
+        },{
+            name :"AA",
+            Age : 18,
+            Job : "BB"
+        }
+            ];
+        $("#btn").click(function(){
+            A[1].name = "BB";
+            delete A[0]["Job"];
+            $("#content_2").html(A[0]["Age"]) ;
+        });
+        --------------------------------------------------------------------------
+    </script> -->
+    <script>
+        var A=[{
+            name :"AA",
+            Age : 18,
+            Job : "BB"
+        },{
+            name :"AA",
+            Age : 18,
+            Job : "BB"
+        }
+            ];
+        $("#btn").click(function(){
+            let x="";
+          for (let i in A)
+          {
+              if (i ==0){
+                for (let j in A[i])
+              {
+                x += " "  + A[i].name + " " +  A[i].Age +  " " +  A[i].Job  ;
+              }
+              }
+            
+          }
+          
+            $("#content_2").html(x) ;
+        });
+        // practice // 
+        $("#btn").click(function(){
+          let x="";
+          for (let i in A){
+            if (i==0){
+              for (let j in A[i]){
+                x+= " " + A[i].name + " " + A[i].Age + " " + A[i].Job;
+              }
+            }
+          }
+        })
+    </script>
+    <!-------------------------------------------------------------------------------------------------------->
+    <script>
+        $("#btn").click(function(){
+            $("#content").text(function(i,origText){
+                return  "Old text: " + origText + " New text: Hello world! (index: " + i + ")";
+                
+            });
+            $("#link").attr("href", function(i,origValue){
+                return origValue + "/jquery/";
+            })
+            $("#link").attr({
+                "href" : "https://www.w3schools.com/jquery/",
+                 "title" : "W3Schools jQuery Tutorial"
+            });
+            $("p").remove("#test");
+            $("p").prepend("Some prepended text.");
+
+        });
+
+        // practice // 
+        $ ('#btn').click (function(){
+          $('#content').text(function(i,origtext){
+            return "Old text: " + origText + " New text: Hello world! (index: " + i + ")";
+          })
+          $("#link").attr("href",function(i,origValue){
+            return origValue + "/jquery/";
+          })
+          $('#link').attr({
+            "href" : "https://www.w3schools.com/jquery/",
+                 "title" : "W3Schools jQuery Tutorial"
+          })
+          $('p').remove("#test");
+        })
+    </script>
+    <!--------------------------------------------------- promise  + Ajax ----------------------------------------------->
+<h2>JavaScript Promise</h2>
+
+<p id="demo"></p>
+
+<script>
+function myDisplayer(some) {
+  document.getElementById("demo").innerHTML = some;
+}
+
+let myPromise = new Promise(function(myResolve, myReject) {
+  let req = new XMLHttpRequest();
+  req.open('GET', "Project4.html");
+  req.onload = function() {
+    if (req.status == 200) {
+      myResolve(req.response);
+    } else {
+      myReject("File not Found");
+    }
+  };
+  req.send();
+});
+
+myPromise.then(
+  function(value) {myDisplayer(value);},
+  function(error) {myDisplayer(error);}
+);
+//// practice //// 
+function myDisplayer(some){
+  document.getElementById("demo").innerHTML = some;
+
+}
+
+let myPromise = new Promise (function (myResolve, myReject){
+  let req = new XMLHttpRequest();
+  req.open ('GET',"Project4.html");
+  req.onload = function (){
+    if (req.status == 200 ) {
+      myResolve(req.responseText);
+    }
+    else{
+      myReject("file not found ");
+    }
+  };
+  req.send();
+});
+myPromise.then (
+  function (value) {myDisplayer(value);},
+  function (error) {myDisplayer(error);}
+);
+</script>
+<!-----------------------------------------------Animated------------------------------------------------------>
+<script>
+$("#btn").click(function(){
+    $("#div1").fadeTo("slow", 0.15);
+    $("#div1").animate({height: '300px', opacity: '0.4'}, "slow");
+    $("#div1").animate({width: '300px', opacity: '0.8'}, "slow");
+    $("#div1").animate({height: '100px', opacity: '0.4'}, "slow");
+    $("#div1").animate({width: '100px', opacity: '0.8'}, "slow");
+    $("#div1").slideToggle("slow");
+});
+//practice //
+$("#btn").click(function(){
+  $("div1").fadeTo("slow",0.15);
+  $("#div1").animate({height : '300px',opacity :'0,4'},"slow");
+  $("#div1").sliceToggle("slow");
+})
+</script>
+<!----------------------------------------------JSON ------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+      document.getElementById('getMessage').onclick = function(){
+        const req = new XMLHttpRequest();
+        req.open("GET",'/json/cats.json',true);
+        req.send();
+        req.onload = function(){
+          const json = JSON.parse(req.responseText);
+          let html = "";
+          // Add your code below this line
+  
+          json.forEach(function(val) {
+    const keys = Object.keys(val);
+    html += "<div class = 'cat'>";
+    keys.forEach(function(key) {
+      html += "<strong>" + key + "</strong>: " + val[key] + "<br>";
+    });
+    html += "</div><br>";
+  });
+  
+          // Add your code above this line
+          document.getElementsByClassName('message')[0].innerHTML = html;
+        };
+      };
+    });
+
+    /// practice /// 
+
+    document.addEventListener('DOMContentLoade',function()
+    {
+      document.getElementById('getMessage').onclick = function(){
+        const req= new XMLHttpRequest();
+        req.open ("GET",'/json/cats.json',true);
+        req.send();
+        req.onload = function(){
+          const json= JSON.parse(req.responseText);
+          let html ="";
+
+          json.forEach (function(val){
+            const keys = Object.keys(val);
+            html += "<div class= 'cat >"
+              key.forEach(function(val){
+                html += "<strong>" + key + "</strong> : " + val[key] + "<br>"
+               })
+               html += "</div><br>"
+
+          })
+          document.getElementById('message')[0].innerHTML = html;
+        }
+      }
+    })
+
+  </script>
+
+  
+  <style>
+    body {
+      text-align: center;
+      font-family: "Helvetica", sans-serif;
+    }
+    h1 {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .box {
+      border-radius: 5px;
+      background-color: #eee;
+      padding: 20px 5px;
+    }
+    button {
+      color: white;
+      background-color: #4791d0;
+      border-radius: 5px;
+      border: 1px solid #4791d0;
+      padding: 5px 10px 8px 10px;
+    }
+    button:hover {
+      background-color: #0F5897;
+      border: 1px solid #0F5897;
+    }
+  </style>
+  
+  <h1>Cat Photo Finder</h1>
+  <p class="message box">
+    The message will go here
+  </p>
+  <p>
+    <button id="getMessage">
+      Get Message
+    </button>
+  </p>
+</body>
+</html>

@@ -1,0 +1,63 @@
+.tieu_de{
+   background-color: orangered;
+   display: flex;
+   padding-left: 40vmax;
+ 
+}
+h3{
+    position: relative;
+}
+#icon{
+    position: absolute;
+    left:110%;
+}
+
+@media (max-width: 576px){
+    .tieu_de{
+
+        padding-left: 30vw;
+      
+     }
+}
+
+.tim_kiem{
+    background: rgb(230, 231, 228);
+    width: 90%;
+    position:absolute;
+    z-index: 1;
+    left: 5%;
+    display: none;
+    top :20%
+}
+.tim_kiem_bar{
+    padding-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+#exit{
+    float: right;
+    margin-right: 3%;
+    padding-top:5px;
+}
+
+
+@media (max-width: 576px){
+    .tim_kiem{
+        background: rgb(230, 231, 228);
+        width: 90%;
+        position:absolute;
+        
+        z-index: 1;
+        left: 5%;
+        display: none;
+    }
+    .tim_kiem_bar{
+        padding-left: 5%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+    }
+   
+}
+
+
+

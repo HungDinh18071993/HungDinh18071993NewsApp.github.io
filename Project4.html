@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 4 - Jquery</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!--Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">       
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+ 
+</head>
+<body>
+    <div class="tieu_de" >
+        <h3>
+            My News
+            <a href="#" style="color: black;" id="icon" ><i class="fa fa-search" aria-hidden="true" ></i></a>
+            <i id="quay" class="fas fa-circle-notch fa-spin"></i>
+        </h3>
+    </div>
+
+    
+
+    <div class="tim_kiem">
+        <div class= "tim_kiem_bar">
+            <label class ="kw">Keywords</label><input type="text" name="keys" id="keys"> <button id="search" > Search </button>   <a href="#" style="color: rgb(218, 207, 207);" id="exit" ><i class="fa fa-times" aria-hidden="true"></i></a>
+            <select class="sl" >
+                <option>All Time</option>
+                <option>To Day</option>
+            </select>
+        </div>
+    </div>
+
+
+<!--html-->
+    <div id="content">
+    </div>
+<!--html-->
+    
+
+
+    <!-- xử lý js_jquery-->
+   <script>
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    $(document).ready(function(){
+        //alert($(".sl").val())
+       
+        $("#quay").show();
+        $("#icon").click(function(){
+            $(".tim_kiem").toggle();
+        });
+
+        $("#exit").click(function(){
+            $(".tim_kiem").hide();
+        });
+        /// get data
+        fetch('https://gnews.io/api/v4/top-headlines?&token=43c5727050c8bb826f20f7950251f5aa')
+            .then(function (response) {
+                return response.json();
+             })
+            .then(function (data) {
+                console.log(data);
+                const json = data.articles;
+
+                /// use data
+            let html =""
+            json.forEach(function(val) {
+                    html += "<div class='container-fluid'>"
+                    html += "<div class='row padding' style='margin-top:20px;'>"
+                    html += "<div class='col-sm-12 col-md-3' style='margin-top:-20px;'>" + "<br>"
+                    html += "<img src='"+ val["image"] +"' class='img-fluid'>"
+                    html += "</div>"
+                    html += "<div class='col-sm-12 col-md-9 '>"
+                    html += "<a href= '" + val["url"] + " 'target='_blank'" + ">" + "<u>" + val["title"] + "</u>" + "</a>"
+                    html += "<p>" +val["publishedAt"] + "</p>"
+                    html += "<p>" + val["description"] + "</p>"
+                    html += "</div>"
+                    html += "</div>";
+                    html += "</div>";
+                
+               
+                });
+                ///// print data
+                $('#content').html( html) ;
+                $("#quay").hide();
+                });
+        
+        // search
+        $("#search").click(function(){
+            $("#quay").show();
+            let key = $("#keys").val()
+            if (key=="")
+            {
+                alert("bạn phải nhập keyword !")
+            }
+            let url = 'https://gnews.io/api/v4/search?q='+ key +'&token=43c5727050c8bb826f20f7950251f5aa'
+            fetch(url)
+                .then(function (response) {
+                     return response.json();
+                })
+                .then(function (data) {
+                    console.log(data);
+                    const json_2 = data.articles;
+                    let html_2 =""
+                json_2.forEach(function(val) {
+                    if ($(".sl").val()== "To Day")
+                    {
+                        let day=val["publishedAt"];
+                        if (day.slice(0,10)==date)
+                        {
+                        html_2 += "<div class='container-fluid'>"
+                        html_2 += "<div class='row padding' style='margin-top:20px;'>"
+                        html_2 += "<div class='col-sm-12 col-md-3' style='margin-top:-20px;'>" + "<br>"
+                        html_2 += "<img src='"+ val["image"] +"' class='img-fluid'>"
+                        html_2 += "</div>"
+                        html_2 += "<div class='col-sm-12 col-md-9 '>"
+                        html_2 += "<a href= '" + val["url"] + " 'target='_blank'" + ">" + "<u>" + val["title"] + "</u>" + "</a>"
+                        html_2 += "<p>" +val["publishedAt"] + "</p>"
+                        html_2 += "<p>" + val["description"] + "</p>"
+                        html_2 += "</div>"
+                        html_2 += "</div>";
+                        html_2 += "</div>";
+                        }
+                   
+                    }
+                    else{
+                    html_2 += "<div class='container-fluid'>"
+                    html_2 += "<div class='row padding' style='margin-top:20px;'>"
+                    html_2 += "<div class='col-sm-12 col-md-3' style='margin-top:-20px;'>" + "<br>"
+                    html_2 += "<img src='"+ val["image"] +"' class='img-fluid'>"
+                    html_2 += "</div>"
+                    html_2 += "<div class='col-sm-12 col-md-9 '>"
+                    html_2 += "<a href= '" + val["url"] + " 'target='_blank'" + ">" + "<u>" + val["title"] + "</u>" + "</a>"
+                    html_2 += "<p>" +val["publishedAt"] + "</p>"
+                    html_2 += "<p>" + val["description"] + "</p>"
+                    html_2 += "</div>"
+                    html_2 += "</div>";
+                    html_2 += "</div>";
+                        }
+            
+                 });
+                ///// print data
+                $('#content').html( html_2) ;
+                $("#quay").hide();
+                 });
+        });
+
+    });
+       
+   </script>
+</body>
+</html>
